@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "361686785304",
+    "project_id": "sneakers-shop-9a166",
+    "storage_bucket": "sneakers-shop-9a166.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361686785304:android:6569a8a5f68a983cb9d26d",
+        "android_client_info": {
+          "package_name": "com.example.sneakersshop.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361686785304-u7u2oqslqdho9bls2tfimrh84kha44k1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKQ9RYtf4zZOAY1kcBqOD7OJGDma3S1H0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361686785304-u7u2oqslqdho9bls2tfimrh84kha44k1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
