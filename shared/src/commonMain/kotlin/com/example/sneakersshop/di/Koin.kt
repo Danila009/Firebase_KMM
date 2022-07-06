@@ -2,7 +2,7 @@ package com.example.sneakersshop.di
 
 import com.example.sneakersshop.services.firestore.repository.FirestoreRepository
 import com.example.sneakersshop.services.firestore.repository.FirestoreRepositoryImpl
-import com.example.sneakersshop.services.firestore.useCase.GetSneakersUseCase
+import com.example.sneakersshop.services.firestore.useCase.*
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.firestore
 import org.koin.core.context.startKoin
@@ -34,4 +34,5 @@ val repositoryModule = module {
 
 val useCaseModule = module {
     factoryOf(::GetSneakersUseCase)
+    factoryOf(::GetAdvertisingUseCase)
 }

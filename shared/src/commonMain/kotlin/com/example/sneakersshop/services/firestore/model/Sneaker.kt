@@ -6,8 +6,10 @@ import kotlinx.serialization.Serializable
 data class Sneaker(
     val id:String,
     val title:String,
-//    val brand:SneakerBrand,
-//    val colors:List<SneakerColorItem>
+    val promo:String,
+    val backgroundColor:String,
+    val brand:SneakerBrand,
+    val colors:List<SneakerColorItem>
 )
 
 @Serializable

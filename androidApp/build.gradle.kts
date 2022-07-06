@@ -60,4 +60,7 @@ dependencies {
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:30.2.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
+
+    //Material icon
+    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
 }
