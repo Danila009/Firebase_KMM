@@ -5,10 +5,10 @@ import com.example.sneakersshop.services.firestore.repository.FirestoreRepositor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetSneakersUseCase(
+class GetSneakerByIdUseCase(
     private val firestoreRepository: FirestoreRepository
-){
-    operator fun invoke(search:String):Flow<List<SneakerDTO>> = flow {
-        emit( firestoreRepository.getSneakers(search) )
+) {
+    operator fun invoke(id:String):Flow<SneakerDTO> = flow {
+        emit( firestoreRepository.getSneakerById(id) )
     }
 }

@@ -9,12 +9,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.sneakersshop.android.ui.icon.NiaIcons
+import com.example.sneakersshop.android.ui.navigation.SNEAKER_ID_ARGUMENT
 import com.example.sneakersshop.android.ui.navigation.Screens
 import com.example.sneakersshop.android.ui.screens.home.HomeScreen
+import com.example.sneakersshop.android.ui.screens.sneakerInfo.SneakerInfoScreen
 import com.example.sneakersshop.android.ui.theme.primaryBackground
 import com.example.sneakersshop.android.ui.theme.secondaryBackground
 import com.example.sneakersshop.android.ui.theme.primaryText
@@ -30,6 +34,7 @@ private enum class BottomBarData(
     PROFILE(title = "Profile", image = NiaIcons.profile)
 }
 
+@ExperimentalMaterialApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun BaseNavHost() {
@@ -115,7 +120,22 @@ fun BaseNavHost() {
                     navController = navHostController,
                     startDestination = Screens.Home.route,
                     builder = {
-                        composable(Screens.Home.route){ HomeScreen() }
+                        composable(Screens.Home.route){
+                            HomeScreen(navController = navHostController)
+                        }
+                        composable(
+                            route = Screens.SneakerInfo.route,
+                            arguments = listOf(
+                                navArgument(SNEAKER_ID_ARGUMENT){
+                                    type = NavType.StringType
+                                }
+                            )
+                        ) {
+                            SneakerInfoScreen(
+                                navController = navHostController,
+                                idSneaker = it.arguments?.getString(SNEAKER_ID_ARGUMENT)!!
+                            )
+                        }
                     }
                 )
             }

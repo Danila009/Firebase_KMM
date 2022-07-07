@@ -7,7 +7,7 @@ data class SneakerColor(
     val id:String,
     val name:String,
     val idSneaker:String,
-    val icons:List<SneakerColorIconItem>,
+    val icons:List<String>,
     val shoeSize:List<SneakerColorShoeSizeItem>
 )
 
@@ -15,9 +15,4 @@ data class SneakerColor(
 data class SneakerColorShoeSizeItem(
     val shoeSizeId:String,
     val price:Int
-)
-
-@Serializable
-data class SneakerColorIconItem(
-    val url:String
 )

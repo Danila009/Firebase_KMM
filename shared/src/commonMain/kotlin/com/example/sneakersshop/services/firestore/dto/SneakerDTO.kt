@@ -1,5 +1,7 @@
 package com.example.sneakersshop.services.firestore.dto
 
+import com.example.sneakersshop.services.firestore.model.SneakerShoeSize
+
 data class SneakerDTO(
     val id:String,
     val title:String,
@@ -16,5 +18,11 @@ data class SneakerBrandDTO(
 
 data class SneakerColorItemDTO(
     val id:String,
-    val name:String
+    val name:String,
+    val icons:List<String>,
+    val shoeSize:List<SneakerShoeSizeDTO>
+)
+
+data class SneakerShoeSizeDTO(
+    val size:String
 )

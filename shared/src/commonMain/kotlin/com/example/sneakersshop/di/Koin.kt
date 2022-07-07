@@ -35,4 +35,5 @@ val repositoryModule = module {
 val useCaseModule = module {
     factoryOf(::GetSneakersUseCase)
     factoryOf(::GetAdvertisingUseCase)
+    factoryOf(::GetSneakerByIdUseCase)
 }

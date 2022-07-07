@@ -3,42 +3,62 @@ package com.example.sneakersshop.services.firestore.repository
 import com.example.sneakersshop.services.firestore.dto.SneakerBrandDTO
 import com.example.sneakersshop.services.firestore.dto.SneakerColorItemDTO
 import com.example.sneakersshop.services.firestore.dto.SneakerDTO
-import com.example.sneakersshop.services.firestore.model.Advertising
-import com.example.sneakersshop.services.firestore.model.Brand
-import com.example.sneakersshop.services.firestore.model.Sneaker
-import com.example.sneakersshop.services.firestore.model.SneakerColor
-import dev.gitlive.firebase.firestore.FirebaseFirestore
+import com.example.sneakersshop.services.firestore.dto.SneakerShoeSizeDTO
+import com.example.sneakersshop.services.firestore.model.*
+import dev.gitlive.firebase.firestore.*
 
 class FirestoreRepositoryImpl(
     private val db:FirebaseFirestore
 ) : FirestoreRepository {
 
-    override suspend fun getSneakers(): List<SneakerDTO> {
+    override suspend fun getSneakers(search:String): List<SneakerDTO> {
         val sneaker = db.collection(SNEAKERS_COLLECTION_KEY)
+            .orderBy("title")
+            .startAt(search)
+            .endAt("$search~")
             .get()
             .documents
             .map { it.data<Sneaker>() }
 
-        return sneaker.map {
-            val brand = getBrandById(it.brand.idBrand)
-            SneakerDTO(
-                id = it.id,
-                title = it.title,
-                promo = it.promo,
-                backgroundColor = it.backgroundColor,
-                brand = SneakerBrandDTO(
-                    id = it.brand.idBrand,
-                    title = brand.title
-                ),
-                colors = it.colors.map { color ->
-                    val sneakerColor = getSneakerColorById(color.colorId)
-                    SneakerColorItemDTO(
-                        id = color.colorId,
-                        name = sneakerColor.name
-                    )
-                }
-            )
-        }
+        return sneaker.map { it.mapDTO() }
+    }
+
+    override suspend fun getSneakerById(id: String): SneakerDTO {
+        val sneaker = db.collection(SNEAKERS_COLLECTION_KEY)
+            .document(id)
+            .get()
+            .data<Sneaker>()
+
+        return sneaker.mapDTO()
+    }
+
+    private suspend fun Sneaker.mapDTO():SneakerDTO{
+        val brand = getBrandById(this.brand.idBrand)
+        return SneakerDTO(
+            id = this.id,
+            title = this.title,
+            promo = this.promo,
+            backgroundColor = this.backgroundColor,
+            brand = SneakerBrandDTO(
+                id = this.brand.idBrand,
+                title = brand.title
+            ),
+            colors = this.colors.map { color ->
+                val sneakerColor = getSneakerColorById(color.colorId)
+                SneakerColorItemDTO(
+                    id = color.colorId,
+                    name = sneakerColor.name,
+                    icons = sneakerColor.icons,
+                    shoeSize = emptyList()
+//                    sneakerColor.shoeSize.map {
+//                        val shoeSize = getShoeSizeById(it.shoeSizeId)
+//                        SneakerShoeSizeDTO(
+//                            size = shoeSize.size
+//                        )
+//                    }
+                )
+            }
+        )
     }
 
     override suspend fun getBrandById(id: String): Brand {
@@ -60,6 +80,13 @@ class FirestoreRepositoryImpl(
             .get()
             .documents
             .map { it.data() }
+    }
+
+    override suspend fun getShoeSizeById(id: String): SneakerShoeSize {
+        return db.collection(SNEAKERS_SHOE_SIZE_COLLECTION_KEY)
+            .document(id)
+            .get()
+            .data()
     }
 
     companion object {
